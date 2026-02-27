@@ -1,0 +1,27 @@
+name: Build Levio Linux Binary
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Upload Binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: levio-linux
+          path: target/release/levio
