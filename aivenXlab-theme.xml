@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+
+<head>
+  <meta charset='UTF-8'/>
+  <meta content='width=device-width, initial-scale=1.0, minimum-scale=1.0' name='viewport'/>
+  <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
+
+  <b:if cond='data:blog.pageType == &quot;index&quot;'>
+    <title><data:blog.pageTitle/></title>
+    <meta expr:content='data:blog.pageTitle' name='title'/>
+    <meta content='Learn programming, AI, Linux, and technology with AiVEN. Professional tutorials and guides for developers.' name='description'/>
+    <meta content='aivenXlab, learn with AiVEN, programming tutorials, AI, Linux, technology blog' name='keywords'/>
+  <b:else/>
+    <title><data:blog.pageName/> | <data:blog.title/></title>
+    <meta expr:content='data:blog.pageName' name='title'/>
+    <b:if cond='data:blog.metaDescription'>
+      <meta expr:content='data:blog.metaDescription' name='description'/>
+    </b:if>
+  </b:if>
+
+  <link expr:href='data:blog.canonicalUrl' rel='canonical'/>
+  <meta content='index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' name='robots'/>
+  <meta content='aivenXlab' name='author'/>
+
+  <meta expr:content='data:blog.title' property='og:site_name'/>
+  <b:if cond='data:blog.pageType == &quot;item&quot;'>
+    <meta expr:content='data:blog.pageName' property='og:title'/>
+    <meta content='article' property='og:type'/>
+    <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
+    <b:if cond='data:blog.postImageThumbnailUrl'>
+      <meta expr:content='data:blog.postImageThumbnailUrl' property='og:image'/>
+    </b:if>
+  <b:else/>
+    <meta expr:content='data:blog.title' property='og:title'/>
+    <meta content='website' property='og:type'/>
+  </b:if>
+
+  <meta content='summary_large_image' name='twitter:card'/>
+  <meta expr:content='data:blog.title' name='twitter:site'/>
+  <b:if cond='data:blog.pageType == &quot;item&quot;'>
+    <meta expr:content='data:blog.pageName' name='twitter:title'/>
+  <b:else/>
+    <meta expr:content='data:blog.title' name='twitter:title'/>
+  </b:if>
+
+  <b:include name='all-head-content'/>
+
+  <link href='https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;display=swap' rel='stylesheet'/>
+
+  <b:skin><![CDATA[
+
+:root {
+  --bg-base:#0d1117;--bg-secondary:#161b22;--bg-tertiary:#1c2128;
+  --border:#21262d;--border-muted:#30363d;
+  --text-primary:#e6edf3;--text-secondary:#8b949e;--text-muted:#484f58;--text-code:#f0883e;
+  --accent-blue:#58a6ff;--accent-green:#3fb950;--accent-orange:#d29922;--accent-cyan:#39c5cf;--accent-purple:#bc8cff;
+  --debian-red:#d70a53;
+  --font-sans:'Space Grotesk',sans-serif;--font-mono:'JetBrains Mono',monospace;--font-display:'Syne',sans-serif;
+  --radius-sm:4px;--radius-md:8px;--radius-lg:12px;
+  --max-width:1200px;--sidebar-width:300px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.4);--shadow-md:0 4px 16px rgba(0,0,0,.5);
+  --glow-blue:0 0 20px rgba(88,166,255,.15);--glow-red:0 0 20px rgba(215,10,83,.2);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background-color:var(--bg-base);color:var(--text-primary);font-family:var(--font-sans);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(88,166,255,.07) 0%,transparent 60%);min-height:100vh}
+a{color:var(--accent-blue);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent-cyan)}
+img{max-width:100%;height:auto;display:block}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg-base)}
+::-webkit-scrollbar-thumb{background:var(--border-muted);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-muted)}
+::selection{background:rgba(88,166,255,.25);color:var(--text-primary)}
+
+@keyframes barFlow{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+#topbar{background:linear-gradient(90deg,#a80030,var(--debian-red),#a80030);background-size:200% 100%;animation:barFlow 8s linear infinite;color:#fff;font-family:var(--font-mono);font-size:11px;letter-spacing:.15em;text-align:center;padding:6px 20px;border-bottom:1px solid rgba(255,255,255,.1);position:relative;z-index:100}
+
+#header-wrapper{position:sticky;top:0;z-index:99;background:rgba(13,17,23,.94);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border-bottom:1px solid var(--border)}
+#header-inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;gap:20px}
+
+.header-logo{display:flex;align-items:center;gap:12px;flex-shrink:0;text-decoration:none}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--debian-red),#ff4080);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-weight:700;font-size:13px;color:#fff;box-shadow:var(--glow-red),inset 0 1px 0 rgba(255,255,255,.15);flex-shrink:0}
+.logo-text-wrap{display:flex;flex-direction:column;line-height:1}
+.logo-name{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--text-primary);letter-spacing:-.03em}
+.logo-name .x{color:var(--accent-blue)}
+.logo-tagline{font-family:var(--font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
+
+.header-nav{display:flex;align-items:center;gap:2px}
+.header-nav a{color:var(--text-secondary);font-size:13px;font-weight:500;padding:7px 12px;border-radius:var(--radius-sm);transition:all .2s;border:1px solid transparent;white-space:nowrap}
+.header-nav a:hover{color:var(--text-primary);background:var(--bg-secondary);border-color:var(--border-muted)}
+
+#search-form{display:flex;align-items:center;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;transition:border-color .2s,box-shadow .2s}
+#search-form:focus-within{border-color:var(--accent-blue);box-shadow:0 0 0 3px rgba(88,166,255,.12)}
+#search-form input{background:transparent;border:none;outline:none;color:var(--text-primary);font-family:var(--font-mono);font-size:12px;padding:8px 14px;width:160px}
+#search-form input::placeholder{color:var(--text-muted)}
+#search-form button{background:var(--accent-blue);border:none;color:var(--bg-base);cursor:pointer;padding:8px 14px;font-size:14px;font-weight:700;transition:background .2s}
+#search-form button:hover{background:var(--accent-cyan)}
+
+.mobile-toggle{display:none;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);cursor:pointer;padding:8px 10px;font-size:18px;line-height:1}
+
+.breadcrumb{max-width:var(--max-width);margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--text-muted)}
+.breadcrumb a:hover{color:var(--accent-blue)}
+.breadcrumb .sep{color:var(--border-muted)}
+.breadcrumb .cur{color:var(--text-secondary)}
+
+.hero-section{max-width:var(--max-width);margin:52px auto 0;padding:0 24px 52px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.22);color:var(--accent-blue);font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;padding:5px 16px;border-radius:20px;margin-bottom:22px;text-transform:uppercase}
+.badge-dot{width:6px;height:6px;background:var(--accent-green);border-radius:50%;display:inline-block;animation:pulse 2s infinite}
+.hero-title{font-family:var(--font-display);font-size:clamp(38px,6vw,72px);font-weight:800;line-height:1.05;letter-spacing:-.04em;margin-bottom:16px;background:linear-gradient(135deg,var(--text-primary) 0%,var(--accent-blue) 60%,var(--accent-cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:var(--text-secondary);font-size:15px;max-width:480px;margin:0 auto 32px;font-family:var(--font-mono)}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--debian-red),#ff4080);color:#fff;font-weight:600;font-size:14px;padding:12px 28px;border-radius:var(--radius-md);transition:transform .2s,box-shadow .2s;box-shadow:0 4px 16px rgba(215,10,83,.4)}
+.hero-cta:hover{color:#fff;transform:translateY(-2px);box-shadow:0 8px 24px rgba(215,10,83,.5)}
+
+.outer-wrapper{max-width:var(--max-width);margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:1fr var(--sidebar-width);gap:32px;align-items:start}
+
+.section-label{display:flex;align-items:center;gap:10px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.section-label::before{content:'';width:3px;height:14px;background:var(--accent-blue);border-radius:2px;flex-shrink:0}
+.section-label h2{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)}
+
+.blog-posts{display:flex;flex-direction:column}
+.post-outer{border-bottom:1px solid var(--border);padding:28px 0;position:relative}
+.post-outer:last-child{border-bottom:none}
+.post-outer::before{content:'';position:absolute;left:-24px;top:0;bottom:0;width:0;background:var(--accent-blue);border-radius:0 2px 2px 0;transition:width .2s}
+.post-outer:hover::before{width:3px}
+
+.post-thumb{width:160px;height:105px;flex-shrink:0;border-radius:var(--radius-md);overflow:hidden;background:var(--bg-secondary);border:1px solid var(--border)}
+.post-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.post-outer:hover .post-thumb img{transform:scale(1.06)}
+.post-row{display:flex;gap:16px}
+.post-col{flex:1;min-width:0}
+.post-meta-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.post-lbl{background:rgba(88,166,255,.1);color:var(--accent-blue);font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.08em;padding:3px 10px;border-radius:20px;border:1px solid rgba(88,166,255,.2);text-transform:uppercase}
+.post-dt{color:var(--text-muted);font-family:var(--font-mono);font-size:11px}
+.post-h2{font-family:var(--font-display);font-size:19px;font-weight:700;line-height:1.3;letter-spacing:-.02em;margin-bottom:10px}
+.post-h2 a{color:var(--text-primary);transition:color .2s}
+.post-h2 a:hover{color:var(--accent-blue)}
+.post-snip{color:var(--text-secondary);font-size:13.5px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:14px}
+.post-foot{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.post-auth{display:flex;align-items:center;gap:8px;color:var(--text-muted);font-size:12px;font-family:var(--font-mono)}
+.auth-av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--debian-red),var(--accent-purple));display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0}
+.read-more{color:var(--accent-blue);font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.06em;display:flex;align-items:center;gap:4px;transition:gap .2s,color .2s}
+.read-more:hover{color:var(--accent-cyan);gap:8px}
+
+.post-outer:first-child .post-thumb{width:100%;height:220px;margin-bottom:16px}
+.post-outer:first-child .post-row{flex-direction:column}
+.post-outer:first-child .post-h2{font-size:26px}
+
+.blog-pager{display:flex;justify-content:space-between;align-items:center;padding:28px 0;border-top:1px solid var(--border);margin-top:8px}
+.blog-pager a{display:inline-flex;align-items:center;gap:8px;background:var(--bg-secondary);border:1px solid var(--border-muted);color:var(--text-secondary);font-family:var(--font-mono);font-size:12px;padding:8px 18px;border-radius:var(--radius-md);transition:all .2s}
+.blog-pager a:hover{border-color:var(--accent-blue);color:var(--accent-blue);background:rgba(88,166,255,.07)}
+
+.post-wrap{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:28px;box-shadow:var(--shadow-md);animation:fadeIn .4s ease}
+.post-cover{width:100%;max-height:400px;object-fit:cover;border-bottom:1px solid var(--border)}
+.post-inner{padding:36px 40px}
+.post-h1{font-family:var(--font-display);font-size:clamp(24px,4vw,38px);font-weight:800;line-height:1.2;letter-spacing:-.03em;color:var(--text-primary);margin-bottom:16px}
+.meta-bar{display:flex;align-items:center;gap:16px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.meta-it{display:flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted)}
+.meta-it b{color:var(--text-secondary);font-weight:400}
+
+.post-body h2,.post-body h3,.post-body h4{font-family:var(--font-display);color:var(--text-primary);margin:28px 0 12px;letter-spacing:-.02em}
+.post-body h2{font-size:22px;font-weight:700;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.post-body h3{font-size:17px;font-weight:600}
+.post-body h4{font-size:14px;font-weight:600;color:var(--text-secondary)}
+.post-body p{color:var(--text-secondary);font-size:15px;line-height:1.8;margin-bottom:18px}
+.post-body ul,.post-body ol{color:var(--text-secondary);padding-left:24px;margin-bottom:18px;line-height:1.8}
+.post-body li{margin-bottom:6px}
+.post-body a{color:var(--accent-blue);border-bottom:1px solid rgba(88,166,255,.3);transition:border-color .2s}
+.post-body a:hover{border-color:var(--accent-blue)}
+.post-body img{border-radius:var(--radius-md);border:1px solid var(--border);margin:20px auto}
+.post-body blockquote{border-left:3px solid var(--accent-blue);background:rgba(88,166,255,.05);padding:16px 20px;margin:20px 0;border-radius:0 var(--radius-md) var(--radius-md) 0;color:var(--text-secondary);font-style:italic}
+.post-body pre{background:#010409;border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;overflow-x:auto;margin:20px 0;font-family:var(--font-mono);font-size:13px;line-height:1.7;color:#79c0ff;position:relative}
+.post-body code{font-family:var(--font-mono);font-size:12.5px;color:var(--text-code);background:rgba(240,136,62,.1);padding:2px 6px;border-radius:3px;border:1px solid rgba(240,136,62,.18)}
+.post-body pre code{background:transparent;border:none;padding:0;color:inherit}
+
+.post-tags{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:28px;padding-top:20px;border-top:1px solid var(--border)}
+.tags-lbl{font-family:var(--font-mono);font-size:11px;color:var(--text-muted)}
+.post-tag{display:inline-flex;align-items:center;background:var(--bg-tertiary);border:1px solid var(--border);color:var(--text-secondary);font-family:var(--font-mono);font-size:11px;padding:4px 12px;border-radius:20px;transition:all .2s}
+.post-tag:hover{background:rgba(88,166,255,.08);border-color:var(--accent-blue);color:var(--accent-blue)}
+
+.post-share{display:flex;align-items:center;gap:8px;margin-top:16px;padding:14px 18px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-md);flex-wrap:wrap}
+.share-lbl{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em}
+.sbtn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:var(--radius-sm);font-size:11px;font-family:var(--font-mono);cursor:pointer;transition:all .2s;border:1px solid;text-decoration:none}
+.s-tw{background:rgba(29,161,242,.08);color:#1da1f2;border-color:rgba(29,161,242,.22)}
+.s-fb{background:rgba(66,103,178,.08);color:#4267b2;border-color:rgba(66,103,178,.22)}
+.s-cp{background:rgba(88,166,255,.08);color:var(--accent-blue);border-color:rgba(88,166,255,.22)}
+.sbtn:hover{opacity:.8;transform:translateY(-1px)}
+
+.ad-slot{text-align:center;margin:28px 0;padding:16px;background:var(--bg-tertiary);border:1px dashed var(--border-muted);border-radius:var(--radius-md)}
+.ad-lbl{font-family:var(--font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+
+#comments{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:28px}
+#comments h4{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+
+#sidebar-wrapper{position:sticky;top:88px}
+.sw{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px;box-shadow:var(--shadow-sm);transition:border-color .2s}
+.sw:hover{border-color:var(--border-muted)}
+.wt{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.wt::before{content:'//';color:var(--accent-blue);font-weight:700}
+.wb{padding:16px}
+
+.ab-av{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--debian-red),var(--accent-blue));display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:18px;font-weight:700;color:#fff;margin:0 auto 12px;box-shadow:0 0 0 3px var(--border),var(--glow-red)}
+.ab-name{text-align:center;font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:3px}
+.ab-tag{text-align:center;font-family:var(--font-mono);font-size:10px;color:var(--text-muted);letter-spacing:.08em;margin-bottom:12px}
+.ab-desc{font-size:12.5px;color:var(--text-secondary);text-align:center;line-height:1.6}
+.social-g{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:14px}
+.soc-a{display:flex;align-items:center;justify-content:center;padding:8px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);transition:all .2s}
+.soc-a:hover{border-color:var(--accent-blue);color:var(--accent-blue);background:rgba(88,166,255,.06)}
+
+.lbl-cloud{display:flex;flex-wrap:wrap;gap:6px}
+.lbl-cloud a{background:var(--bg-tertiary);border:1px solid var(--border);color:var(--text-secondary);font-family:var(--font-mono);font-size:10px;padding:4px 10px;border-radius:20px;transition:all .2s}
+.lbl-cloud a:hover{background:rgba(88,166,255,.08);border-color:var(--accent-blue);color:var(--accent-blue)}
+
+.pop-ul{list-style:none}
+.pop-ul li{padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px}
+.pop-ul li:last-child{border-bottom:none;padding-bottom:0}
+.pop-r{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--text-muted);min-width:18px;padding-top:2px}
+.pop-ul li:nth-child(1) .pop-r{color:var(--accent-orange)}
+.pop-ul li:nth-child(2) .pop-r{color:var(--text-secondary)}
+.pop-ul li:nth-child(3) .pop-r{color:var(--text-code)}
+.pop-ul a{color:var(--text-secondary);font-size:12.5px;line-height:1.5;transition:color .2s}
+.pop-ul a:hover{color:var(--accent-blue)}
+
+.arch-ul{list-style:none}
+.arch-ul li{border-bottom:1px solid var(--border)}
+.arch-ul li:last-child{border-bottom:none}
+.arch-ul a{display:flex;align-items:center;justify-content:space-between;padding:9px 0;color:var(--text-secondary);font-size:13px;transition:color .2s}
+.arch-ul a:hover{color:var(--accent-blue)}
+.arch-c{background:var(--bg-tertiary);color:var(--text-muted);font-family:var(--font-mono);font-size:10px;padding:2px 7px;border-radius:10px;border:1px solid var(--border)}
+
+#footer-wrapper{background:var(--bg-secondary);border-top:1px solid var(--border);margin-top:40px}
+.footer-top{max-width:var(--max-width);margin:0 auto;padding:52px 24px 40px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+.ft-desc{color:var(--text-muted);font-size:13px;line-height:1.7;max-width:270px;margin-top:14px}
+.ft-ht{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px}
+.ft-ul{list-style:none}
+.ft-ul li{margin-bottom:8px}
+.ft-ul a{color:var(--text-muted);font-size:13px;transition:color .2s}
+.ft-ul a:hover{color:var(--accent-blue)}
+.footer-bot{border-top:1px solid var(--border);padding:18px 24px}
+.footer-bot-in{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.ft-copy{font-family:var(--font-mono);font-size:11px;color:var(--text-muted)}
+.ft-copy a{color:var(--accent-blue)}
+.ft-stat{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);display:flex;align-items:center;gap:6px}
+.stat-dot{width:6px;height:6px;background:var(--accent-green);border-radius:50%;animation:pulse 3s infinite;display:inline-block}
+
+#scrolltop{position:fixed;bottom:28px;right:28px;width:40px;height:40px;background:var(--bg-secondary);border:1px solid var(--border-muted);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);font-size:16px;transition:all .2s;opacity:0;pointer-events:none;z-index:200;box-shadow:var(--shadow-sm)}
+#scrolltop.show{opacity:1;pointer-events:auto}
+#scrolltop:hover{background:var(--accent-blue);border-color:var(--accent-blue);color:var(--bg-base);transform:translateY(-3px)}
+
+#npb{position:fixed;top:0;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--accent-blue),var(--accent-cyan));z-index:9999;transition:width .3s ease;pointer-events:none}
+
+.err-wrap{text-align:center;padding:80px 24px}
+.err-code{font-family:var(--font-mono);font-size:96px;font-weight:800;color:var(--border-muted);line-height:1;margin-bottom:16px}
+.err-msg{font-family:var(--font-display);font-size:22px;color:var(--text-primary);margin-bottom:10px}
+.err-sub{color:var(--text-secondary);font-family:var(--font-mono);font-size:13px;margin-bottom:32px}
+
+@media(max-width:1024px){
+  .outer-wrapper{grid-template-columns:1fr}
+  #sidebar-wrapper{position:static;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .footer-top{grid-template-columns:1fr 1fr;gap:28px}
+}
+@media(max-width:768px){
+  #header-inner{height:56px;padding:0 16px;gap:12px}
+  .header-nav{display:none}
+  .header-nav.open{display:flex;flex-direction:column;position:fixed;top:56px;left:0;right:0;background:rgba(13,17,23,.98);border-bottom:1px solid var(--border);padding:12px 16px;gap:2px;z-index:98;backdrop-filter:blur(20px)}
+  .mobile-toggle{display:flex}
+  .header-search{display:none}
+  .outer-wrapper{padding:24px 16px 60px}
+  .post-thumb{width:110px;height:75px}
+  .post-outer:first-child .post-thumb{height:160px}
+  .post-inner{padding:22px 18px}
+  .footer-top{grid-template-columns:1fr;gap:24px}
+  .footer-bot-in{flex-direction:column;text-align:center}
+  #sidebar-wrapper{grid-template-columns:1fr}
+  .hero-section{margin-top:28px}
+}
+@media(max-width:480px){
+  .post-row{flex-direction:column}
+  .post-thumb{width:100%;height:150px}
+}
+@media print{
+  #topbar,#header-wrapper,#sidebar-wrapper,#footer-wrapper,#scrolltop,.post-share{display:none!important}
+  .outer-wrapper{display:block}
+  body{background:#fff;color:#000}
+}
+
+  ]]></b:skin>
+</head>
+
+<body>
+
+<div id='npb'/>
+
+<div id='topbar'>
+  &#9889; AIVENXLAB &#183; LEARN WITH AIVEN &#183; PROGRAMMING &#183; AI &#183; LINUX &#183; TECHNOLOGY
+</div>
+
+<div id='header-wrapper'>
+  <div id='header-inner'>
+    <a class='header-logo' expr:href='data:blog.homepageUrl'>
+      <div class='logo-icon'>AX</div>
+      <div class='logo-text-wrap'>
+        <div class='logo-name'>aiven<span class='x'>X</span>lab</div>
+        <div class='logo-tagline'>Learn with AiVEN</div>
+      </div>
+    </a>
+
+    <nav class='header-nav' id='main-nav'>
+      <a expr:href='data:blog.homepageUrl'>Home</a>
+      <a href='/search/label/Tutorial'>Tutorials</a>
+      <a href='/search/label/Linux'>Linux</a>
+      <a href='/search/label/AI'>AI</a>
+      <a href='/search/label/Programming'>Programming</a>
+      <a href='/p/about.html'>About</a>
+    </nav>
+
+    <div class='header-search'>
+      <form action='/search' id='search-form' method='get'>
+        <input autocomplete='off' name='q' placeholder='Search...' type='search'/>
+        <button type='submit'>&#9906;</button>
+      </form>
+    </div>
+
+    <button class='mobile-toggle' id='mob-btn' type='button'>&#9776;</button>
+  </div>
+</div>
+
+<b:if cond='data:blog.pageType != &quot;index&quot;'>
+  <div class='breadcrumb'>
+    <a expr:href='data:blog.homepageUrl'>Home</a>
+    <span class='sep'>/</span>
+    <b:if cond='data:blog.pageType == &quot;item&quot;'>
+      <b:loop values='data:post.labels' var='label'>
+        <a expr:href='data:label.url'><data:label.name/></a>
+        <span class='sep'>/</span>
+      </b:loop>
+    </b:if>
+    <span class='cur'><data:blog.pageName/></span>
+  </div>
+</b:if>
+
+<b:if cond='data:blog.pageType == &quot;index&quot;'>
+  <section class='hero-section'>
+    <div class='hero-badge'><span class='badge-dot'/> Live and Learning</div>
+    <h1 class='hero-title'>Learn with AiVEN</h1>
+    <p class='hero-sub'>// Tutorials &#183; Linux &#183; AI &#183; Programming</p>
+    <a class='hero-cta' href='/p/about.html'>Start Learning &#8594;</a>
+  </section>
+</b:if>
+
+<div class='outer-wrapper'>
+
+  <main id='main-wrapper'>
+
+    <b:if cond='data:blog.pageType == &quot;index&quot;'>
+      <div class='section-label'><h2>Latest Posts</h2></div>
+      <div class='blog-posts'>
+        <b:loop values='data:posts' var='post'>
+          <article class='post-outer' expr:id='&quot;p-&quot; + data:post.id'>
+            <div class='post-row'>
+              <b:if cond='data:post.featuredImage'>
+                <div class='post-thumb'>
+                  <img alt='' expr:src='data:post.featuredImage' loading='lazy'/>
+                </div>
+              </b:if>
+              <div class='post-col'>
+                <div class='post-meta-top'>
+                  <b:loop values='data:post.labels' var='label'>
+                    <a class='post-lbl' expr:href='data:label.url'><data:label.name/></a>
+                  </b:loop>
+                  <span class='post-dt'><data:post.dateHeader/></span>
+                </div>
+                <h2 class='post-h2'>
+                  <a expr:href='data:post.url'><data:post.title/></a>
+                </h2>
+                <p class='post-snip'><data:post.snippet/></p>
+                <div class='post-foot'>
+                  <div class='post-auth'>
+                    <div class='auth-av'>AX</div>
+                    <data:post.author/>
+                  </div>
+                  <a class='read-more' expr:href='data:post.url'>Read more &#8594;</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </b:loop>
+      </div>
+
+      <div class='blog-pager'>
+        <b:if cond='data:newerPageUrl'>
+          <a expr:href='data:newerPageUrl'>&#8592; Newer</a>
+        <b:else/>
+          <span/>
+        </b:if>
+        <b:if cond='data:olderPageUrl'>
+          <a expr:href='data:olderPageUrl'>Older &#8594;</a>
+        </b:if>
+      </div>
+    </b:if>
+
+    <b:if cond='data:blog.pageType == &quot;item&quot;'>
+      <b:loop values='data:posts' var='post'>
+        <article class='post-wrap' expr:id='&quot;post-&quot; + data:post.id'>
+          <b:if cond='data:post.featuredImage'>
+            <img alt='' class='post-cover' expr:src='data:post.featuredImage' loading='eager'/>
+          </b:if>
+          <div class='post-inner'>
+            <h1 class='post-h1'><data:post.title/></h1>
+            <div class='meta-bar'>
+              <div class='meta-it'>&#128197; <b><data:post.dateHeader/></b></div>
+              <div class='meta-it'>&#9998; <b><data:post.author/></b></div>
+              <b:loop values='data:post.labels' var='label'>
+                <a class='post-lbl' expr:href='data:label.url'><data:label.name/></a>
+              </b:loop>
+            </div>
+
+            <!-- AdSense In-Article: Add your ins tag here with your publisher and slot IDs -->
+
+            <div class='post-body'>
+              <data:post.body/>
+            </div>
+
+            <div class='post-tags'>
+              <span class='tags-lbl'>tags:</span>
+              <b:loop values='data:post.labels' var='label'>
+                <a class='post-tag' expr:href='data:label.url'>#<data:label.name/></a>
+              </b:loop>
+            </div>
+
+            <div class='post-share'>
+              <span class='share-lbl'>Share:</span>
+              <a class='sbtn s-tw' expr:href='&quot;https://twitter.com/intent/tweet?url=&quot; + data:post.url + &quot;&amp;text=&quot; + data:post.title' rel='noopener noreferrer' target='_blank'>&#120143; Twitter</a>
+              <a class='sbtn s-fb' expr:href='&quot;https://www.facebook.com/sharer/sharer.php?u=&quot; + data:post.url' rel='noopener noreferrer' target='_blank'>Facebook</a>
+              <button class='sbtn s-cp' onclick='navigator.clipboard.writeText(location.href);this.textContent=&quot;&#10003; Copied!&quot;;setTimeout(()=&gt;this.textContent=&quot;Copy Link&quot;,2000)' type='button'>Copy Link</button>
+            </div>
+          </div>
+        </article>
+
+        <div id='comments'>
+          <b:include data='post' name='comment-form'/>
+          <b:include data='post' name='comments'/>
+        </div>
+      </b:loop>
+    </b:if>
+
+    <b:if cond='data:blog.pageType == &quot;static_page&quot;'>
+      <b:loop values='data:posts' var='post'>
+        <article class='post-wrap'>
+          <div class='post-inner'>
+            <h1 class='post-h1'><data:post.title/></h1>
+            <div class='post-body'><data:post.body/></div>
+          </div>
+        </article>
+      </b:loop>
+    </b:if>
+
+    <b:if cond='data:blog.pageType == &quot;error_page&quot;'>
+      <div class='err-wrap'>
+        <div class='err-code'>404</div>
+        <div class='err-msg'>Page Not Found</div>
+        <div class='err-sub'>// The file you are looking for does not exist or has been moved.</div>
+        <a class='hero-cta' expr:href='data:blog.homepageUrl'>&#8592; Return Home</a>
+      </div>
+    </b:if>
+
+  </main>
+
+  <aside id='sidebar-wrapper'>
+
+    <div class='sw'>
+      <div class='wt'>About</div>
+      <div class='wb'>
+        <div class='ab-av'>AX</div>
+        <div class='ab-name'>aivenXlab</div>
+        <div class='ab-tag'>// Learn with AiVEN</div>
+        <div class='ab-desc'>A space for developers and learners. Deep dives into Linux, AI, and modern programming.</div>
+        <div class='social-g'>
+          <a class='soc-a' href='#'>GitHub</a>
+          <a class='soc-a' href='#'>Twitter</a>
+          <a class='soc-a' href='#'>YouTube</a>
+          <a class='soc-a' href='#'>Telegram</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- AdSense Sidebar: Add your ins tag here with your publisher and slot IDs -->
+
+    <b:section class='sidebar' id='lbl-sec' maxwidgets='1' showaddelement='yes'>
+      <b:widget id='Label1' locked='false' title='Topics' type='Label' version='1'>
+        <b:widget-settings>
+          <b:widget-setting name='sorting'>ALPHA</b:widget-setting>
+          <b:widget-setting name='display'>LIST</b:widget-setting>
+          <b:widget-setting name='selectedLabelsList'/>
+          <b:widget-setting name='showType'>ALL</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main'>
+          <div class='sw'>
+            <div class='wt'><data:title/></div>
+            <div class='wb'>
+              <div class='lbl-cloud'>
+                <b:loop values='data:labels' var='label'>
+                  <a expr:href='data:label.url'><data:label.name/></a>
+                </b:loop>
+              </div>
+            </div>
+          </div>
+        </b:includable>
+      </b:widget>
+    </b:section>
+
+    <b:section class='sidebar' id='pop-sec' maxwidgets='1' showaddelement='yes'>
+      <b:widget id='PopularPosts1' locked='false' title='Popular Posts' type='PopularPosts' version='1'>
+        <b:widget-settings>
+          <b:widget-setting name='numItemsToShow'>5</b:widget-setting>
+          <b:widget-setting name='showThumbnails'>false</b:widget-setting>
+          <b:widget-setting name='showSnippets'>false</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main'>
+          <div class='sw'>
+            <div class='wt'><data:title/></div>
+            <div class='wb'>
+              <ul class='pop-ul'>
+                <b:loop index='i' values='data:posts' var='post'>
+                  <li>
+                    <span class='pop-r'><b:eval expr='data:i + 1'/>.</span>
+                    <a expr:href='data:post.href'><data:post.title/></a>
+                  </li>
+                </b:loop>
+              </ul>
+            </div>
+          </div>
+        </b:includable>
+      </b:widget>
+    </b:section>
+
+    <b:section class='sidebar' id='arch-sec' maxwidgets='1' showaddelement='yes'>
+      <b:widget id='BlogArchive1' locked='false' title='Archive' type='BlogArchive' version='1'>
+        <b:widget-settings>
+          <b:widget-setting name='showOption'>MONTHLY</b:widget-setting>
+          <b:widget-setting name='listStyle'>FLAT</b:widget-setting>
+          <b:widget-setting name='collapsedWeeks'>true</b:widget-setting>
+          <b:widget-setting name='showPostCount'>true</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main'>
+          <div class='sw'>
+            <div class='wt'><data:title/></div>
+            <div class='wb'>
+              <ul class='arch-ul'>
+                <b:loop values='data:data' var='i'>
+                  <li>
+                    <a expr:href='data:i.url'>
+                      <data:i.name/>
+                      <span class='arch-c'><data:i.post-count/></span>
+                    </a>
+                  </li>
+                </b:loop>
+              </ul>
+            </div>
+          </div>
+        </b:includable>
+      </b:widget>
+    </b:section>
+
+  </aside>
+
+</div>
+
+<footer id='footer-wrapper'>
+  <div class='footer-top'>
+    <div>
+      <div style='font-family:Syne,sans-serif;font-size:22px;font-weight:800;letter-spacing:-.03em;color:#e6edf3;margin-bottom:4px;'>aiven<span style='color:#58a6ff;'>X</span>lab</div>
+      <div style='font-family:JetBrains Mono,monospace;font-size:9px;color:#484f58;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;'>// Learn with AiVEN</div>
+      <p class='ft-desc'>A learning hub for developers, engineers, and tech enthusiasts. Deep-dives into Linux, AI, and the tools that power modern computing.</p>
+    </div>
+    <div>
+      <div class='ft-ht'>Explore</div>
+      <ul class='ft-ul'>
+        <li><a href='/search/label/Tutorial'>Tutorials</a></li>
+        <li><a href='/search/label/Linux'>Linux</a></li>
+        <li><a href='/search/label/AI'>AI</a></li>
+        <li><a href='/search/label/Programming'>Programming</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class='ft-ht'>Site</div>
+      <ul class='ft-ul'>
+        <li><a href='/p/about.html'>About</a></li>
+        <li><a href='/p/contact.html'>Contact</a></li>
+        <li><a href='/p/privacy-policy.html'>Privacy Policy</a></li>
+        <li><a href='/p/disclaimer.html'>Disclaimer</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class='ft-ht'>Connect</div>
+      <ul class='ft-ul'>
+        <li><a href='#'>GitHub</a></li>
+        <li><a href='#'>Twitter / X</a></li>
+        <li><a href='#'>YouTube</a></li>
+        <li><a href='#'>Telegram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class='footer-bot'>
+    <div class='footer-bot-in'>
+      <div class='ft-copy'>
+        &#169; <data:blog.title/> &#183; All rights reserved &#183; <a href='/p/privacy-policy.html'>Privacy</a>
+      </div>
+      <div class='ft-stat'><span class='stat-dot'/> System: Online</div>
+    </div>
+  </div>
+</footer>
+
+<button id='scrolltop' type='button'>&#8593;</button>
+
+<script type='text/javascript'>
+//<![CDATA[
+(function(){
+  var bar=document.getElementById('npb');
+  if(bar){
+    bar.style.width='30%';
+    var t=setInterval(function(){
+      var w=parseFloat(bar.style.width)||30;
+      if(w<90){bar.style.width=Math.min(w+Math.random()*15,90)+'%';}
+    },300);
+    window.addEventListener('load',function(){
+      clearInterval(t);bar.style.width='100%';
+      setTimeout(function(){bar.style.opacity='0';},300);
+      setTimeout(function(){bar.style.display='none';},700);
+    });
+  }
+  var btn=document.getElementById('scrolltop');
+  if(btn){
+    window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>400);});
+    btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  }
+  var toggle=document.getElementById('mob-btn');
+  var nav=document.getElementById('main-nav');
+  if(toggle&&nav){
+    toggle.addEventListener('click',function(){
+      nav.classList.toggle('open');
+      toggle.innerHTML=nav.classList.contains('open')?'&#10005;':'&#9776;';
+    });
+  }
+  if('IntersectionObserver' in window){
+    document.querySelectorAll('img[loading="lazy"]').forEach(function(img){
+      img.style.cssText='opacity:0;transition:opacity .4s;';
+      var obs=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){if(e.isIntersecting){e.target.style.opacity='1';obs.unobserve(e.target);}});
+      },{threshold:0.1});
+      obs.observe(img);
+    });
+  }
+  document.querySelectorAll('.post-body pre').forEach(function(pre){
+    var b=document.createElement('button');
+    b.textContent='copy';b.type='button';
+    b.style.cssText='position:absolute;top:10px;right:10px;background:rgba(88,166,255,.12);border:1px solid rgba(88,166,255,.28);color:#58a6ff;font-family:JetBrains Mono,monospace;font-size:10px;padding:3px 10px;border-radius:4px;cursor:pointer;letter-spacing:.06em;';
+    b.addEventListener('click',function(){navigator.clipboard.writeText(pre.innerText);b.textContent='copied!';setTimeout(function(){b.textContent='copy';},2000);});
+    pre.appendChild(b);
+  });
+})();
+//]]>
+</script>
+
+</body>
+</html>
